@@ -1,0 +1,34 @@
+---
+- hosts: ec2
+  tasks:
+    - name:
+      service:
+        name: docker
+        enabled: false
+        state: stopped
+
+
+    - name: Intalando python-apt
+      yum: name=httpd state=present update_cache=yes
+      become: true
+
+    - name: Enabled httpd
+      shell: systemctl enable httpd
+      shell: systemctl start httpd
+      become: true
+
+    - name: Limpieza
+      shell: rm -rf /var/www/html/* /home/ec2-user/*
+      become: true
+
+    - name: Descarga repo
+      shell: wget https://github.com/AlbertoSantiago-LT/hello-2048/archive/refs/heads/main.zip
+      become: true
+
+    - name: Descomprimir
+      shell: unzip main.zip
+      become: true
+
+    - name: mover
+      shell: mv /home/ec2-user/hello-2048-main/public_html/* /var/www/html/
+      become: true

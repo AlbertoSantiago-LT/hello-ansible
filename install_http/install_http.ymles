@@ -1,0 +1,10 @@
+---
+- hosts: ec2
+  tasks:
+    - name: Intalando python-apt
+      yum: name=python-apt state=present
+      become: true
+
+    - name: Intalacion apache
+      yum: name=apache2 state=present
+      become: true

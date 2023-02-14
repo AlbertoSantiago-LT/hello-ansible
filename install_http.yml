@@ -1,0 +1,22 @@
+---
+- hosts: ec2
+  become: true
+  tasks:
+    - name: Intalando Apache Https
+      yum:
+       name: httpd
+       state: latest
+
+    - name: Enabled httpd
+      service:
+        name: httpd
+        enabled: true
+        state: started
+    - name: Install app
+      copy:
+        src: /home/sinensia/hello-2048
+        dest: /var/www/html/
+        owner: apache
+        group: apache
+        mode: "0644"
+        directory_mode: "0755"
